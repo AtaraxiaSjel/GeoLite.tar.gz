@@ -17,8 +17,8 @@ jobs:
     outputs:
       new_release_created: ${{ steps.check_tag.outputs.new_release }}
     steps:
-      - name: Checkout your repository
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
         with:
           # Fetch all history for all tags to compare against
           fetch-depth: 0
@@ -37,7 +37,7 @@ jobs:
           echo "release_name=$(echo "$release_info" | jq -r '.name')" >> $GITHUB_OUTPUT
           echo "release_body=$(echo "$release_info" | jq -r '.body')" >> $GITHUB_OUTPUT
 
-      - name: Check if this release tag already exists in your repo
+      - name: Check if release tag already exists
         id: check_tag
         run: |
           if git rev-parse "refs/tags/${{ steps.get_latest_release.outputs.tag }}" >/dev/null 2>&1; then
@@ -87,6 +87,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
       - name: Clean up old releases
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
