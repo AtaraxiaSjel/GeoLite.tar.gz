@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TARGET_REPO: "P3TERX/GeoLite.mmdb"
+    permissions:
+      contents: write
     outputs:
       new_release_created: ${{ steps.check_tag.outputs.new_release }}
     steps:
