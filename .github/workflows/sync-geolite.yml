@@ -63,7 +63,7 @@ jobs:
 
       - name: Create a new release in this repository
         if: steps.check_tag.outputs.new_release == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.get_latest_release.outputs.tag }}
           name: "Release ${{ steps.get_latest_release.outputs.tag }} (archived)"
