@@ -2,7 +2,7 @@ name: Sync and Archive External GeoLite
 
 on:
   schedule:
-    - cron: '0 */12 * * *'
+    - cron: '0 4 * * *'
   push:
   workflow_dispatch:
 
@@ -95,7 +95,7 @@ jobs:
         run: |
           echo "Fetching a list of all releases..."
           RELEASES_TO_DELETE=$( \
-            gh release list --json tagName,createdAt --jq 'sort_by(.createdAt) | reverse | .[].tagName' | tail -n +4 \
+            gh release list --json tagName --jq 'sort_by(.tagName) | reverse | .[].tagName' | tail -n +4 \
           )
           if [ -z "$RELEASES_TO_DELETE" ]; then
             echo "No old releases to delete. Found 3 or fewer releases."
